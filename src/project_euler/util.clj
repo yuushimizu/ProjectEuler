@@ -18,3 +18,11 @@
    (iterate #(+ % step) start))
   ([start]
    (range-from start 1)))
+
+(defn digits [n]
+  (if (zero? n)
+    [0]
+    (->> (iterate #(quot % 10) n)
+         (take-while #(> % 0))
+         (map #(mod % 10))
+         (reverse))))
