@@ -1,6 +1,6 @@
 (require '[project-euler.util :refer :all])
 
 (->> (range)
-     (filter #(or (div? % 3) (div? % 5)))
-     (take-while #(< % 1000))
+     (filter (p-or (p-div? 3) (p-div? 5)))
+     (take-while (p-< 1000))
      (sum))
