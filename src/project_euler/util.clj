@@ -12,3 +12,9 @@
 (defn fib []
   (->> (iterate (fn [[n m]] [(+ n m) n]) [1 1])
        (map first)))
+
+(defn range-from
+  ([start step]
+   (iterate #(+ % step) start))
+  ([start]
+   (range-from start 1)))

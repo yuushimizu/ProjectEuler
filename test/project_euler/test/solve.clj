@@ -5,4 +5,5 @@
 (deftest test-solve
   (are [n answer] (= answer (solve n))
     1 233168
-    2 4613732))
+    2 4613732
+    3 6857))
