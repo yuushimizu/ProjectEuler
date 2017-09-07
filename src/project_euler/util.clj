@@ -1,5 +1,8 @@
 (ns project-euler.util)
 
+(defn solve [n]
+  (load-file (format "src/project_euler/p%s.clj" (str n))))
+
 (defn div? [n m]
   (zero? (mod n m)))
 

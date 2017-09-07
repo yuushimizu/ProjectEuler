@@ -1,4 +1,5 @@
-(ns project-euler.core)
+(ns project-euler.core
+  (:require [project-euler.util :refer [solve]]))
 
 (defn -main [n]
-  (println (load-file (format "src/project_euler/p%s.clj" n))))
+  (println (solve n)))
