@@ -2,7 +2,11 @@
          '[project-euler.util.predicates :as p])
 
 (->> (cons 2 (range-from 3 2))
-     (reductions (fn [[_ n] candidate] [candidate (div-if-can n candidate)])
+     (reductions (fn [[_ n] candidate]
+                   [candidate
+                    (->> (iterate #(/ % candidate) n)
+                         (drop-while (p/div? candidate))
+                         (first))])
                  [1 600851475143])
      (filter (fn [[_ n]] (= n 1)))
      (first)
