@@ -6,6 +6,9 @@
 (defn div? [n m]
   (zero? (mod n m)))
 
+(defn div-if-can [n m]
+  (if (div? n m) (/ n m) n))
+
 (defn square [n]
   (* n n))
 
