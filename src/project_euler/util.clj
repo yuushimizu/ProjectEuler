@@ -29,3 +29,11 @@
          (take-while #(> % 0))
          (map #(mod % 10))
          (reverse))))
+
+(defn keep-reductions [f initial-value coll]
+  (->> coll
+       (reductions (fn [[acc _] x]
+                     (if-let [result (f acc x)] [result true] [acc false]))
+                   [initial-value nil])
+       (filter second)
+       (map first)))
