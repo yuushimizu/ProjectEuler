@@ -6,6 +6,9 @@
 (defn div? [n m]
   (zero? (mod n m)))
 
+(defn square [n]
+  (* n n))
+
 (defn sum [nums]
   (reduce + 0 nums))
 
