@@ -74,5 +74,3 @@
                          (remove #(aget is-not-prime %)))
                     (lazy-seq (primes* (expand-is-not-prime is-not-prime) (inc (alength is-not-prime))))))]
     (cons 2 (primes* (boolean-array 100000) 3))))
-
-(take 20 (primes))
