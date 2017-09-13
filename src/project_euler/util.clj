@@ -44,12 +44,6 @@
   (->> (iterate (fn [[n m]] [(+ n m) n]) [0 1])
        (map first)))
 
-(defn prime-candidates
-  ([]
-   (cons 2 (range-from 3 2)))
-  ([limit]
-   (take-while #(< % limit) (prime-candidates))))
-
 (defn primes []
   ;; ignores 2x
   (letfn [(set-is-not-prime [^booleans is-not-prime ^long from]

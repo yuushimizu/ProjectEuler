@@ -1,7 +1,7 @@
 (require '[project-euler.util :refer :all]
          '[project-euler.util.predicates :as p])
 
-(->> (prime-candidates)
+(->> (primes)
      (reductions (fn [[_ n] candidate]
                    [candidate
                     (->> (iterate #(/ % candidate) n)
