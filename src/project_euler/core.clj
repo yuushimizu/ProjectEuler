@@ -2,4 +2,4 @@
   (:require [project-euler.util :refer [solve]]))
 
 (defn -main [n]
-  (println (solve n)))
+  (time (println (solve n))))
