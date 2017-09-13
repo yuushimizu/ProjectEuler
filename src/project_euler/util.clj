@@ -40,6 +40,12 @@
          (map #(mod % 10))
          (reverse))))
 
+(defn reverse-number [n]
+  (->> (iterate #(quot % 10) n)
+       (take-while #(> % 0))
+       (map #(mod % 10))
+       (reduce #(+ (* %1 10) %2) 0)))
+
 (defn fib []
   (->> (iterate (fn [[n m]] [(+ n m) n]) [0 1])
        (map first)))

@@ -44,6 +44,12 @@
     6 [6]
     0 [0]))
 
+(deftest test-reverse-number
+  (are [n result] (= (reverse-number n) result)
+    1234 4321
+    800 8
+    0 0))
+
 (deftest test-fib
   (is (= (take 15 (fib)) [0 1 1 2 3 5 8 13 21 34 55 89 144 233 377] (take 15 (fib)))))
 
