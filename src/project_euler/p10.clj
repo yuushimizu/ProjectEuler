@@ -1,6 +1,8 @@
-(require '[project-euler.util :refer :all]
-         '[project-euler.util.predicates :as p])
+(ns project-euler.p10
+  (:require [project-euler.util :refer :all]
+            [project-euler.util.predicates :as p]))
 
-(->> (primes)
-     (take-while (p/< 2000000))
-     (sum))
+(defn solve []
+  (->> (primes)
+       (take-while (p/< 2000000))
+       (sum)))

@@ -1,5 +1,11 @@
-(ns project-euler.core
-  (:require [project-euler.util :refer [solve]]))
+(ns project-euler.core)
+
+(defn load-solve [n]
+  (let [ns (symbol (format "project-euler.p%s" n))]
+    (require ns)
+    (ns-resolve ns 'solve)))
 
 (defn -main [n]
-  (time (println (solve n))))
+  (let [solve (load-solve n)
+        result (time (solve))]
+    (println result)))

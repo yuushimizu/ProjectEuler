@@ -1,9 +1,9 @@
 (ns project-euler.test.solve
   (:require [clojure.test :refer :all]
-            [project-euler.util :refer [solve]]))
+            [project-euler.core :refer [load-solve]]))
 
 (deftest test-solve
-  (are [n answer] (= answer (solve n))
+  (are [n answer] (= answer ((load-solve n)))
     1 233168
     2 4613732
     3 6857
