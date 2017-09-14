@@ -52,25 +52,22 @@
 
 (defn primes []
   ;; ignores 2x
-  (letfn [(set-is-not-prime [^booleans is-not-prime ^long from]
-            (let [length (alength is-not-prime)
-                  sqrt (Math/sqrt (alength is-not-prime))]
-              (doseq [^long n (->> (range-from 3 2)
-                                   (take-while #(< % sqrt)))]
-                (when-not (aget is-not-prime n)
-                  (let [n2 (* n 2)]
-                    (doseq [^long x (range (max (square n)
-                                                (+ (* (quot (+ (dec from) n) n2) n2) n))
-                                           length
-                                           n2)]
-                      (aset is-not-prime x true)))))))
-          (expand-is-not-prime [^booleans current]
-            (let [expanded (boolean-array (* (alength current) 2))]
-              (System/arraycopy current 0 expanded 0 (alength current))
-              expanded))
-          (primes* [^booleans is-not-prime ^long start]
-            (set-is-not-prime is-not-prime start)
-            (concat (->> (range start (alength is-not-prime) 2)
-                         (remove #(aget is-not-prime %)))
-                    (lazy-seq (primes* (expand-is-not-prime is-not-prime) (inc (alength is-not-prime))))))]
-    (cons 2 (primes* (boolean-array 100000) 3))))
+  (let [first-limit 1000000
+        is-not-prime (java.util.BitSet. first-limit)]
+    (letfn [(set-is-not-prime [^long limit ^long from]
+              (let [sqrt (Math/sqrt limit)]
+                (doseq [^long n (->> (range-from 3 2)
+                                     (take-while #(< % sqrt)))]
+                  (when-not (.get is-not-prime n)
+                    (let [n2 (* n 2)]
+                      (doseq [^long x (range (max (square n)
+                                                  (+ (* (quot (+ (dec from) n) n2) n2) n))
+                                             limit
+                                             n2)]
+                        (.set is-not-prime x)))))))
+            (primes* [^long limit ^long start]
+              (set-is-not-prime limit start)
+              (concat (->> (range start limit 2)
+                           (remove #(.get is-not-prime %)))
+                      (lazy-seq (primes* (* limit 2) (inc limit)))))]
+      (cons 2 (primes* first-limit 3)))))
