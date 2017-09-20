@@ -6,6 +6,11 @@
 (defn div-if-can [n m]
   (if (div? n m) (/ n m) n))
 
+(defn div-while-possible [n m]
+  (->> (iterate (fn [[n count]] [(quot n m) (inc count)]) [n 0])
+       (drop-while #(div? (first %) m))
+       (first)))
+
 (defn square [n]
   (* n n))
 
@@ -43,6 +48,16 @@
        (map #(mod % 10))
        (reduce #(+ (* %1 10) %2) 0)))
 
+(defn factors [n]
+  (let [sqrt (Math/sqrt n)
+        small-factors (->> (range 2 sqrt)
+                           (filter #(div? n %)))]
+    (concat [1]
+            small-factors
+            (if (== sqrt (int sqrt)) [(int sqrt)])
+            (map #(quot n %) (reverse small-factors))
+            [n])))
+
 (defn fib []
   (->> (iterate (fn [[n m]] [(+ n m) n]) [0 1])
        (map first)))
@@ -68,3 +83,27 @@
                            (remove #(.get is-not-prime %)))
                       (lazy-seq (primes* (* limit 2) (inc limit)))))]
       (cons 2 (primes* first-limit 3)))))
+
+(defn prime-candidates []
+  (letfn [(rec [n]
+            (lazy-seq (cons n (cons (+ n 2) (rec (+ n 6))))))]
+    (cons 2 (cons 3 (rec 5)))))
+
+(defn prime-factors [n]
+  (letfn [(rec [n [candidate & rest]]
+            (cond (= n 1) []
+                  (> (square candidate) n) [n]
+                  (div? n candidate) (lazy-seq (cons candidate (rec (quot n candidate) (cons candidate rest))))
+                  :else (lazy-seq (rec n rest))))]
+    (rec n (prime-candidates))))
+
+(defn factor-count [n]
+  (->> (prime-factors n)
+       (frequencies)
+       (vals)
+       (map inc)
+       (reduce *)))
+
+(defn divisors-count [n]
+  (* 2 (count (filter #(zero? (rem n %))
+                      (range 1 (Math/sqrt n))))))
