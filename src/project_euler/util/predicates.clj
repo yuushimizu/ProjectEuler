@@ -1,5 +1,5 @@
 (ns project-euler.util.predicates
-  (:refer-clojure :exclude [and or not= < <= > >=])
+  (:refer-clojure :exclude [and or = not= < <= > >=])
   (:require [clojure.core :as core]
             [project-euler.util :as util]))
 
@@ -11,6 +11,9 @@
 
 (defn or [f & fns]
   (reduce (fn [pred f] #(core/or (pred %) (f %))) f fns))
+
+(defn = [x]
+  #(core/= x %))
 
 (defn not= [x]
   #(core/not= x %))
